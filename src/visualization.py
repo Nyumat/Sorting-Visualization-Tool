@@ -10,8 +10,7 @@ algorithms = {"Selection_Sort": algorithms.Selection_Sort()}
 
 if len(sys.argv) > 1:
       if sys.argv[1] == "list":
-            for key in algorithms.keys():
-                  print(key,end=" ")
+            for key in algorithms.keys(): print(key,end=" ")
             print("")
             sys.exit(0)
 pygame.init()
@@ -40,6 +39,12 @@ def render(algorithm, swap=None, swap2=None, display=display):
       check_quit()
       pygame.display.update()
 
+def keep_window_open(algorithm, display, time):
+      pygame.display.set_caption("Sorting Visualization Tool     Algorithm: {}      Time: {:.3f}      Status: Sorting Complete.".format(algorithm.name, time))     
+      while True:
+            check_quit()
+            pygame.display.update()
+
 def main():
       if len(sys.argv) < 2:
             print("Select an algorithm")
@@ -48,18 +53,13 @@ def main():
                   algorithm = algorithms[sys.argv[1]]
                   try:
                         elapsed_time = algorithm.run()[1]
+                        keep_window_open(algorithm, display, elapsed_time)
                         pass
                   except:
                         pass
             except:
                   print("Error.", os.error)
+
+
 if __name__ == "__main__":
       main()
-
-
-"""
-To  still  do:
-
- - Keep window open
- - Finish adding other algorithms  
-"""

@@ -3,8 +3,8 @@ import random
 
 class Algorithms:
       def __init__(self, name):
-            self.name = name
             self.array = random.sample(range(512), 512)
+            self.name = name
       def render_display(self, swap=None, swap2=None):
             # import other file
             import visualization
@@ -16,9 +16,9 @@ class Algorithms:
             time_elapsed = time.time() - self.start_time
             return self.array, time_elapsed # Return the sorted array too
 
-class Selection_Sort(Algorithms):
+class SelectionSort(Algorithms):
       def __init__(self):
-            super().__init__("Selection_Sort")
+            super().__init__("SelectionSort")
       def algorithm(self):
             for x in range(len(self.array)):
                   minimum_index = x
@@ -28,5 +28,12 @@ class Selection_Sort(Algorithms):
                   self.array[x], self.array[minimum_index] = self.array[minimum_index], self.array[x]
                   # Everytime we swap, call update_display to perform it in realtime
                   self.update_display(self.array[x], self.array[minimum_index])
-
-
+class BubbleSort(Algorithms):
+      def __init__(self):
+            super().__init__("BubbleSort")
+      def algorithm(self):
+            for x in range(len(self.array)):
+                  for y in range(len(self.array) - 1 - x):
+                        if self.array[y] > self.array[y + 1]:
+                              self.array[y],self.array[y + 1] = self.arrray[y  + 1], self.array[y]
+                  self.update_display(self.array[y], self.arrray[y + 1]) 
