@@ -5,17 +5,12 @@ import pygame
 import os
 
 # Len X Size of Array
-size = [1024,512]
-algorithms = {"Selection_Sort": algorithms.Selection_Sort()}
+size = (1024,512)
+algorithms = {"SelectionSort": algorithms.SelectionSort(), "BubbleSort": algorithms.BubbleSort()}
 
-if len(sys.argv) > 1:
-      if sys.argv[1] == "list":
-            for key in algorithms.keys(): print(key,end=" ")
-            print("")
-            sys.exit(0)
-pygame.init()
-display = pygame.display.set_mode((size[0], size[1]))
+display = pygame.display.set_mode(size)
 display.fill(pygame.Color("#a48be0"))
+
 # Check for window quit
 def check_quit():
       for event in pygame.event.get():
@@ -23,7 +18,7 @@ def check_quit():
                   pygame.quit()
                   sys.exit()
 # Draw the sorted array on each iteration                  
-def render(algorithm, swap=None, swap2=None, display=display):
+def update(algorithm, swap=None, swap2=None, display=display):
       display.fill(pygame.Color("#a48be0"))
       pygame.display.set_caption("Sorting Visualization Tool   Algorithm {}   Time: {:.3f}   Status: Sorting....".format(algorithm.name, time.time() -  algorithm.start_time))
       k = int(size[0] / len(algorithm.array))
@@ -43,23 +38,22 @@ def keep_window_open(algorithm, display, time):
       pygame.display.set_caption("Sorting Visualization Tool     Algorithm: {}      Time: {:.3f}      Status: Sorting Complete.".format(algorithm.name, time))     
       while True:
             check_quit()
-            pygame.display.update()
+            
 
-def main():
+def main(args):
       if len(sys.argv) < 2:
             print("Select an algorithm")
-      else:
+      elif args[1] == "list": # show list of algorithms available
+            print("Algorithms list:\n\t" + "\n\t".join(algorithms.keys()))
+            sys.exit(0)
+      else: # Picked an algo
             try:
-                  algorithm = algorithms[sys.argv[1]]
-                  try:
-                        elapsed_time = algorithm.run()[1]
-                        keep_window_open(algorithm, display, elapsed_time)
-                        pass
-                  except:
-                        pass
+                  algorithm = algorithms[args[1]]
+                  _, time_elapsed = algorithm.start()
+                  keep_window_open(algorithm, display, time_elapsed)
             except:
-                  print("Error.", os.error)
-
+                  print("Error")
 
 if __name__ == "__main__":
-      main()
+      sys.argv.append("BubbleSort")
+      main(sys.argv)

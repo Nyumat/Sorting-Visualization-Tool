@@ -1,7 +1,8 @@
 import time
 import random
+from abc import ABCMeta, abstractmethod
 
-class Algorithms:
+class Algorithm(metaclass=ABCMeta):
       def __init__(self, name):
             self.array = random.sample(range(512), 512)
             self.name = name
@@ -15,8 +16,11 @@ class Algorithms:
             # Time elapsed since start
             time_elapsed = time.time() - self.start_time
             return self.array, time_elapsed # Return the sorted array too
+      @abstractmethod
+      def algorithm(self):
+            raise TypeError(f"Algorithm.algorithm() has not been overwritten.")
 
-class SelectionSort(Algorithms):
+class SelectionSort(Algorithm):
       def __init__(self):
             super().__init__("SelectionSort")
       def algorithm(self):
@@ -28,7 +32,7 @@ class SelectionSort(Algorithms):
                   self.array[x], self.array[minimum_index] = self.array[minimum_index], self.array[x]
                   # Everytime we swap, call update_display to perform it in realtime
                   self.update_display(self.array[x], self.array[minimum_index])
-class BubbleSort(Algorithms):
+class BubbleSort(Algorithm):
       def __init__(self):
             super().__init__("BubbleSort")
       def algorithm(self):
