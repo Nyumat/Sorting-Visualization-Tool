@@ -40,11 +40,26 @@ def render(algorithm, swap=None, swap2=None, display=display):
       check_quit()
       pygame.display.update()
 
+def main():
+      if len(sys.argv) < 2:
+            print("Select an algorithm")
+      else:
+            try:
+                  algorithm = algorithms[sys.argv[1]]
+                  try:
+                        elapsed_time = algorithm.run()[1]
+                        pass
+                  except:
+                        pass
+            except:
+                  print("Error.", os.error)
+if __name__ == "__main__":
+      main()
+
+
 """
 To  still  do:
 
  - Keep window open
- - Main function
- - Error handling
  - Finish adding other algorithms  
 """
